@@ -10,6 +10,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { Netflix_Logo, PROFILE_IMG } from "../utils/constant";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://img.icons8.com/nolan/1200/user-default.jpg",
+            photoURL: PROFILE_IMG,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -85,10 +86,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/8e4a7625-f942-48f5-a9b0-d470b772bc8c/web/IN-en-20251215-TRIFECTA-perspective_a8575e53-99ab-4f16-a2d6-c037acaf12a6_small.jpg"
-          alt="logo"
-        />
+        <img src={Netflix_Logo} alt="logo" />
       </div>
       <form
         onSubmit={(e) => {
