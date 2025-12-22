@@ -24,7 +24,6 @@ const Login = () => {
 
   const validateSignIn = () => {
     const errorMsg = checkValidData(email.current.value, pwd.current.value);
-    console.log(errorMsg);
     setErrorMsg(errorMsg);
     if (errorMsg) return;
 
@@ -56,7 +55,6 @@ const Login = () => {
             .catch((error) => {
               setErrorMsg(error.message);
             });
-          console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -68,7 +66,7 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email.current.value, pwd.current.value)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
+
           navigate("/browse");
         })
         .catch((error) => {

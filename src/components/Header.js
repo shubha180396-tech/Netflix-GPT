@@ -46,13 +46,13 @@ const Header = () => {
       />
       {user && (
         <div className="flex p-2 m-2 ">
-          <img className="" alt="usericon" src={user?.photoURL}></img>
-          {/* <img
+          {/* <img className="" alt="usericon" src={user?.photoURL}></img> */}
+          <img
             className="w-14 h-14 p-2"
             alt="usericon"
             src="https://img.icons8.com/nolan/1200/user-default.jpg"
-          ></img> */}
-          <p>{user?.displayName}</p>
+          ></img>
+          <p className="m-2 text-white font-bold">{user?.displayName}</p>
           <button
             className="font-bold bg-red-600 text-white rounded-md p-2"
             onClick={handleSignout}
