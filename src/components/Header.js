@@ -5,11 +5,16 @@ import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { SUPPORTED_LANG } from "../utils/constant";
+import lang from "../utils/languageConstant";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -37,6 +42,16 @@ const Header = () => {
         navigate("/error");
       });
   };
+
+  const handleGptSearch = () => {
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    console.log(e.target.value);
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-20 flex justify-between">
       <img
@@ -47,14 +62,39 @@ const Header = () => {
       {user && (
         <div className="flex p-2 m-2 ">
           {/* <img className="" alt="usericon" src={user?.photoURL}></img> */}
-          <img
+          {/* <img
             className="w-14 h-14 p-2"
             alt="usericon"
             src="https://img.icons8.com/nolan/1200/user-default.jpg"
-          ></img>
-          <p className="m-2 text-white font-bold">{user?.displayName}</p>
+          ></img> */}
+          <p className="my-2 text-white font-bold px-6">{user?.displayName}</p>
+
+          {showGptSearch && (
+            <select
+              className="px-4 rounded-lg bg-red-600 text-white"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANG.map((lang) => (
+                <option
+                  className="bg-blue-300
+                 rounded-lg text-white bg-opacity-95"
+                  key={lang.identifier}
+                  value={lang.identifier}
+                >
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
           <button
-            className="font-bold bg-red-600 text-white rounded-md p-2"
+            className="font-bold bg-red-600 text-white rounded-md px-4 mx-4"
+            onClick={handleGptSearch}
+          >
+            {showGptSearch ? "Home Page" : "GPT search"}
+          </button>
+
+          <button
+            className="font-bold bg-red-600 text-white rounded-md px-2"
             onClick={handleSignout}
           >
             Sign out
